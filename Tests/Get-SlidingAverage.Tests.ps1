@@ -13,7 +13,7 @@ Describe 'Get-SlidingAverage' {
         'de-DE' {
             $Counter = '\Prozessor(_Total)\Prozessorzeit (%)'
         }
-        'en-US' {
+        {$_ -like 'en-*'} {
             $Counter = '\Processor(_Total)\% Processor Time'
         }
     }

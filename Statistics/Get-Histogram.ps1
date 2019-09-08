@@ -1,7 +1,7 @@
 ﻿function Get-Histogram {
-    [CmdletBinding(DefaultParameterSetName='BucketCount')]
+    [CmdletBinding(DefaultParameterSetName = 'BucketCount')]
     Param(
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory, ValueFromPipeline)]
         [ValidateNotNullOrEmpty()]
         [array]
         $Data
@@ -33,13 +33,22 @@
         [float]
         $BucketCount
     )
-
-    Process {
+    Begin {
+        # Define default display properties
+        $ddps = New-Object System.Management.Automation.PSPropertySet('DefaultDisplayPropertySet', [string[]]('Index', 'Count', 'lowerBound', 'upperBound'))
+        $PSStandardMembers = [System.Management.Automation.PSMemberInfo[]]$ddps
+    }
+    End {
         Write-Verbose ('[{0}] Building histogram' -f $MyInvocation.MyCommand)
-
-        Write-Debug ('[{0}] Retrieving measurements from upstream cmdlet for {1} values' -f $MyInvocation.MyCommand, $Data.Count)
+        # If the argument for the Data parameter was not provided via pipeline set the input to the provided argument
+        # otherwise use the automatic Input variable
+        if (!$PSCmdlet.MyInvocation.ExpectingInput) {
+            $Input = $Data
+        }
+        Write-Debug ('[{0}] Retrieving measurements from upstream cmdlet for {1} values' -f $MyInvocation.MyCommand, $Input.Count)
         Write-Progress -Activity 'Measuring data'
-        $Stats = $Data | Microsoft.PowerShell.Utility\Measure-Object -Minimum -Maximum -Property $Property
+
+        $Stats = $Input | Microsoft.PowerShell.Utility\Measure-Object -Minimum -Maximum -Property $Property
 
         if (-Not $PSBoundParameters.ContainsKey('Minimum')) {
             $Minimum = $Stats.Minimum
@@ -64,7 +73,7 @@
             [pscustomobject]@{
                 Index         = $_
                 lowerBound    = $Minimum + ($_ - 1) * $BucketWidth
-                upperBound    = $Minimum +  $_      * $BucketWidth
+                upperBound    = $Minimum + $_ * $BucketWidth
                 Count         = 0
                 RelativeCount = 0
                 Group         = New-Object -TypeName System.Collections.ArrayList
@@ -74,10 +83,10 @@
 
         Write-Debug ('[{0}] Building histogram' -f $MyInvocation.MyCommand)
         $DataIndex = 1
-        foreach ($_ in $Data) {
+        foreach ($_ in $Input) {
             $Value = $_.$Property
 
-            Write-Progress -Activity 'Filling buckets' -PercentComplete ($DataIndex / $Data.Count * 100)
+            Write-Progress -Activity 'Filling buckets' -PercentComplete ($DataIndex / $Input.Count * 100)
             
             if ($Value -ge $Minimum -and $Value -le $Maximum) {
                 $BucketIndex = [math]::Floor(($Value - $Minimum) / $BucketWidth)
@@ -91,14 +100,19 @@
             ++$DataIndex
         }
 
-        Write-Debug ('[{0}] Adding relative count' -f $MyInvocation.MyCommand)
+        Write-Debug ('[{0}] Adding relative count and default properties' -f $MyInvocation.MyCommand)
         foreach ($_ in $Buckets) {
+            # Add an type name to make the default properties work
+            [void]$_.PSObject.TypeNames.Insert(0, 'Statistics.Buckets')
+            # Attach default display property set
+            Add-Member -InputObject $_ -MemberType MemberSet -Name PSStandardMembers -Value $PSStandardMembers
             $_.RelativeCount = if ($OverallCount -gt 0) { $_.Count / $OverallCount } else { 0 }
         }
 
         Write-Debug ('[{0}] Returning histogram' -f $MyInvocation.MyCommand)
         $Buckets
+
     }
 }
 
-New-Alias -Name gh -Value Get-Histogram -Force
+New-Alias -Name ghist -Value Get-Histogram -Force

@@ -24,9 +24,10 @@ Describe 'Get-Histogram' {
         $histogram | Select-Object -First 1 -ExpandProperty lowerBound | Should Be 2
         $histogram | Select-Object -Last  1 -ExpandProperty upperBound | Should Be 5
     }
+    # can not get this working for some reason
     It 'Warns for large number of buckets' {
         $data = 1..110 | ConvertFrom-PrimitiveType
-        Mock Write-Warning {}
+        Mock Write-Warning { } 
         Get-Histogram -Data $data -Property Value
         Assert-MockCalled -CommandName Write-Warning -Times 1 -Exactly
     }
