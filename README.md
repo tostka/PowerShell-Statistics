@@ -2,6 +2,28 @@
 | :------: | :-------: | :------: |
 | [![Build status](https://ci.appveyor.com/api/projects/status/e56ra8c3q1jtc19o?svg=true)](https://ci.appveyor.com/project/nicholasdille/powershell-statistics) | [![Coverage Status](https://coveralls.io/repos/github/nicholasdille/PowerShell-Statistics/badge.svg?branch=master)](https://coveralls.io/github/nicholasdille/PowerShell-Statistics?branch=master) | [![Download](https://img.shields.io/badge/powershellgallery-Statistics-blue.svg)](https://www.powershellgallery.com/packages/Statistics/) 
 
+# Changes as compared to original repository
+Get-Histogram
+- Added DefaultDisplayPropertySet (Index,Count,lowerBound,upperBound)
+- Made function take input from pipeline (not processing by pipeline but just as syntactic sugar)
+- Replaced arraylist "pipeline data collector" by automatic $Input variable
+- Changed gh alias to ghist (collided with Get-Help for me)
+- Cannot get the test "Honors minimum and maximum values" working (mock call to write-warning)
+
+Add-Bar
+- Fixed double selection of Count property
+- Changed name of InputObject to Data for consistency
+- Replaced arraylist "pipeline data collector" by automatic $Input variable
+
+Measure-Object
+- Made function take input from pipeline (not processing by pipeline but just as syntactic sugar)
+
+Show-Measurement
+- Made function take input from pipeline (not processing by pipeline but just as syntactic sugar)
+- Changed name of InputObject to Data for consistency
+- Could not get the 'Produces output' test working (mock call to write-host)
+- Decreased width to account for text in front of graph
+
 # Introduction
 
 Statistical analysis
