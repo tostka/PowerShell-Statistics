@@ -2,7 +2,7 @@
 | :------: | :-------: | :------: |
 | [![Build status](https://ci.appveyor.com/api/projects/status/e56ra8c3q1jtc19o?svg=true)](https://ci.appveyor.com/project/nicholasdille/powershell-statistics) | [![Coverage Status](https://coveralls.io/repos/github/nicholasdille/PowerShell-Statistics/badge.svg?branch=master)](https://coveralls.io/github/nicholasdille/PowerShell-Statistics?branch=master) | [![Download](https://img.shields.io/badge/powershellgallery-Statistics-blue.svg)](https://www.powershellgallery.com/packages/Statistics/) 
 
-# Changes as compared to original repository
+### Changes as compared to original repository
 Get-Histogram
 - Added DefaultDisplayPropertySet (Index,Count,lowerBound,upperBound)
 - Made function take input from pipeline (not processing by pipeline but just as syntactic sugar)
