@@ -1,4 +1,61 @@
 ﻿function Measure-Object {
+    <#
+    .SYNOPSIS
+    Overload of the official cmdlet to provide statistical insights Calculates the numeric properties of objects, and the characters, words, and lines in string objects, such as files of text.
+    .NOTES
+    Github      : https://github.com/tostka/PowerShell-Statistics
+    Tags        : Powershell,Statistics
+    REVISIONS
+    .DESCRIPTION
+    This cmdlet overloads the official implementation and adds several statistical value to the resulting object.
+    This includes the median, several percentiles as well as the 95% confidence interval.
+
+    The Measure-Object cmdlet calculates the property values of certain types of object.
+    Measure-Object performs three types of measurements, depending on the parameters in the command.
+
+    The Measure-Object cmdlet performs calculations on the property values of objects.
+    It can count objects and calculate the minimum, maximum, sum, and average of the numeric values.
+    For text objects, it can count and calculate the number of lines, words, and characters.
+    .PARAMETER  InputObject
+    Specifies the objects to be measured.
+    Enter a variable that contains the objects, or type a command or expression that gets the objects.
+
+    When you use the InputObject parameter with Measure-Object , instead of piping command results to Measure-Object , the InputObject value-even if the value is a collection that is the result of a command, such as \`-InputObject (Get-Process)\`-is treated as a single object.
+    Because InputObject cannot return individual properties from an array or collection of objects, it is recommended that if you use Measure-Object to measure a collection of objects for those objects that have specific values in defined properties, you use Measure-Object in the pipeline, as shown in the examples in this topic.
+    .PARAMETER  Property
+    Specifies the numeric property to measure
+
+    Specifies one or more numeric properties to measure.
+    The default is the Count property of the object.
+    .PARAMETER Width
+    Length of the bar for the maximum value (width of the graph)INPUTS
+    .INPUTS 
+    System.Array
+    System.Management.Automation.PSObject
+    You can pipe objects to Measure-Object.
+    System.Management.Automation.PSObject
+    You can pipe objects to Measure-Object .
+    .OUTPUTS
+    System.Object
+    .EXAMPLE
+    PS> Get-Process | Measure-Object -Property WorkingSet
+    Display memory usage of processes
+    .EXAMPLE
+    PS> Get-ChildItem | Measure-Object
+    Count the files and folders in a directory
+    .LINK
+    https://github.com/tostka/PowerShell-Statistics
+    .LINK
+    https://en.m.wikipedia.org/wiki/Median
+    .LINK
+    https://en.m.wikipedia.org/wiki/Variance
+    .LINK
+    https://en.m.wikipedia.org/wiki/Standard_deviation
+    .LINK
+    https://en.m.wikipedia.org/wiki/Percentile
+    .LINK
+    https://en.m.wikipedia.org/wiki/Confidence_interval
+    #>
     [CmdletBinding()]
     Param(
         [Parameter(Mandatory, ValueFromPipeline)]

@@ -1,4 +1,28 @@
 ﻿function Add-Bar {
+    <#
+    .SYNOPSIS
+    Add-Bar.ps1 - Visualizes values using bars
+    .NOTES
+    Github      : https://github.com/tostka/PowerShell-Statistics
+    Tags        : Powershell,Statistics
+    REVISIONS
+    .DESCRIPTION
+    A graphical representation help understanding data.
+    Add-Bar adds a new member to the input objects which contain bars to visualize the size of the value relative to the maximum value
+
+    .PARAMETER  InputObject
+    Input objects containing the relevant data
+    .PARAMETER  Property
+    Property of the input objects containing the relevant data
+    .PARAMETER Width
+    Length of the bar for the maximum value (width of the graph)
+    .EXAMPLE
+    PS> Add-Bar -InputObject $Files -Property Length
+    .EXAMPLE
+    PS> $Files | Add-Bar -Property Length
+    .LINK
+    https://github.com/tostka/PowerShell-Statistics
+    #>
     [CmdletBinding()]
     Param(
         [Parameter(Mandatory, ValueFromPipeline)]

@@ -1,4 +1,26 @@
 function Get-SlidingAverage {
+    <#
+    .SYNOPSIS
+    Calculates a sliding average over a window of the specified size
+    .NOTES
+    Github      : https://github.com/tostka/PowerShell-Statistics
+    Tags        : Powershell,Statistics
+    REVISIONS
+    .DESCRIPTION
+    Calculates a sliding average over a window of the specified size:
+    .PARAMETER  InputObject
+    Input objects containing the relevant data
+    .PARAMETER  Property
+    Property of the input objects containing the relevant data
+    .PARAMETER Size
+    The sample window over which to calculate the average
+    .EXAMPLE
+    PS> Get-Counter -Counter '\Processor(_Total)\% Processor Time' -SampleInterval 1 -MaxSamples 10 |
+     ConvertFrom-PerformanceCounter -Instance _total | 
+     Get-SlidingAverage -Property Value -Size 5 ; 
+    .LINK
+    https://github.com/tostka/PowerShell-Statistics
+    #>
     [CmdletBinding()]
     Param(
         [Parameter(Mandatory,ValueFromPipeline)]

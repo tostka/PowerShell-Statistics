@@ -1,4 +1,31 @@
 function Expand-DateTime {
+    <#
+    .SYNOPSIS
+    convert timestamps for legibility
+    .NOTES
+    Github      : https://github.com/tostka/PowerShell-Statistics
+    Tags        : Powershell,Statistics
+    REVISIONS
+    .DESCRIPTION
+    A graphical representation help understanding data.
+    Add-Bar adds a new member to the input objects which contain bars to visualize the size of the value relative to the maximum value
+
+    .PARAMETER  InputObject
+    Input objects containing the relevant data
+    .PARAMETER  Property
+    Property of the input objects containing the relevant data
+    .EXAMPLE
+    PS> 1..10 | ForEach-Object {
+    Get-Counter -Counter '\Processor(_Total)\% Processor Time'
+        } | ConvertFrom-PerformanceCounter | ForEach-Object {
+            [pscustomobject]@{
+                Timestamp = $_.Timestamp.DateTime
+                Value     = $_.Value
+            }
+        } | Expand-DateTime -Property Timestamp
+    .LINK
+    https://github.com/tostka/PowerShell-Statistics
+    #>
     [CmdletBinding()]
     Param(
         [Parameter(Mandatory,ValueFromPipeline)]

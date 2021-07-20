@@ -1,4 +1,56 @@
 ﻿function Get-Histogram {
+    <#
+    .SYNOPSIS
+    Generate a frequency distribution of the input Data
+    .NOTES
+    Github      : https://github.com/tostka/PowerShell-Statistics
+    Tags        : Powershell,Statistics
+    REVISIONS
+    * 4:03 PM 7/20/2021 added CBH for mbx histogram ; all mod cmdlets: converted external .md-based docs into CBH (wasn't displaying get-help for cmds when published & installed)
+    .DESCRIPTION
+    Generate a frequency distribution of the input Data
+    .PARAMETER  Data
+    Input objects containing the relevant data
+    .PARAMETER  BucketCount
+    Number of buckets to divide the data into
+    .PARAMETER BucketWidth
+    Size of each bucket to divide the data into
+    .PARAMETER  Maximum
+    Indicates that the cmdlet displays the maximum value of the specified properties.
+    .PARAMETER  Minimum
+    Indicates that the cmdlet displays the minimum value of the specified properties.
+    .PARAMETER  Property
+    Property of the input objects containing the relevant data
+    .EXAMPLE
+    PS> $Processes = Get-Process ; 
+    PS> $Histogram = $Processes | Get-Histogram -Property WorkingSet64 -BucketWidth 50mb -BucketCount 10 ; 
+    .EXAMPLE
+    $allmbxs = get-mailbox -ResultSize unlimited ;
+    $allsizes= ($allmbxs|Get-MailboxStatistics).totalitemsize.value ; 
+    $allsizes|%{
+      [pscustomobject]@{
+          sizeGB = $_.tostring().split('(').replace(' bytes)','').replace(',','')[1]/1gb
+      } } | Get-Histogram -Property sizeGB ; 
+    Index Count
+    ----- -----
+        1   242
+        2    32
+        3    23
+        4    18
+        5    11
+        6    12
+        7     5
+        8     6
+        9     0
+       10     2
+       11     1
+       12     1
+    Above retrieves TotalItem size property from all mailboxes (via Exchange Online native cmdlets).
+    Then Converts the output stream into a series of CustomObjects (from dehydrated 'bytes' text parsed 
+    into size in gb), and then -finally generates a histogram on the sizeGB series.  
+    .LINK
+    https://github.com/tostka/PowerShell-Statistics
+    #>
     [CmdletBinding(DefaultParameterSetName = 'BucketCount')]
     Param(
         [Parameter(Mandatory, ValueFromPipeline)]

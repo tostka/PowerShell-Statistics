@@ -1,4 +1,50 @@
 ﻿function ConvertFrom-PerformanceCounter {
+    <#
+    .SYNOPSIS
+    Add-Bar.ps1 - Restructure get-counter data to make it easier to process
+    .NOTES
+    Github      : https://github.com/tostka/PowerShell-Statistics
+    Tags        : Powershell,Statistics
+    REVISIONS
+    .DESCRIPTION
+    Restructure get-counter data to make it easier to process
+    .PARAMETER  InputObject
+    Input objects containing the relevant data
+    .PARAMETER  Instance
+    Property of the input objects containing the relevant data
+    .INPUTS
+    System.Array
+    .OUTPUTS
+    System.Object
+    .EXAMPLE
+    PS> Get-counter -Counter "\Processor(_Total)\% Processor Time" -SampleInterval 2 -MaxSamples 100 | ConvertFrom-PerformanceCounter
+    .LINK
+    https://github.com/tostka/PowerShell-Statistics
+    #>
+    <#
+    .SYNOPSIS
+    Add-Bar.ps1 - Visualizes values using bars
+    .NOTES
+    Github      : https://github.com/tostka/PowerShell-Statistics
+    Tags        : Powershell,Statistics
+    REVISIONS
+    .DESCRIPTION
+    A graphical representation help understanding data.
+    Add-Bar adds a new member to the input objects which contain bars to visualize the size of the value relative to the maximum value
+
+    .PARAMETER  InputObject
+    Input objects containing the relevant data
+    .PARAMETER  Property
+    Property of the input objects containing the relevant data
+    .PARAMETER Width
+    Length of the bar for the maximum value (width of the graph)
+    .EXAMPLE
+    PS> Add-Bar -InputObject $Files -Property Length
+    .EXAMPLE
+    PS> $Files | Add-Bar -Property Length
+    .LINK
+    https://github.com/tostka/PowerShell-Statistics
+    #>
     [CmdletBinding()]
     param(
         [Parameter(Mandatory,ValueFromPipeline)]

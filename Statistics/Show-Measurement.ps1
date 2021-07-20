@@ -1,4 +1,40 @@
 ﻿function Show-Measurement {
+    <#
+    .SYNOPSIS
+    Visualizes statistical data about input values
+    .NOTES
+    Github      : https://github.com/tostka/PowerShell-Statistics
+    Tags        : Powershell,Statistics
+    REVISIONS
+    .DESCRIPTION
+    Show-Measurement relies on the overload of Measure-Object provided by this module.
+    It visualizes the data calculated by Measure-Object on the console.
+    .PARAMETER  InputObject
+    Input objects containing the relevant data
+    .PARAMETER  Property
+    Property of the input objects containing the relevant data
+    .PARAMETER Width
+    Maximum number of characters to display per line
+    .PARAMETER PassThru
+    {{Fill PassThru Description}}
+    .INPUTS
+    System.Object
+    .OUTPUTS
+    System.Object
+    .EXAMPLE
+    PS> Get-Process | Measure-Object -Property WorkingSet | Show-Measurement
+---------|---------|---------|---------|---------|---------|---------|---------|---------|---------|
+P10
+ P25
+         A
+      c-----C
+   M
+            P75
+                        P90
+---------|---------|---------|---------|---------|---------|---------|---------|---------|---------|
+    .LINK
+    https://github.com/tostka/PowerShell-Statistics
+    #>
     [CmdletBinding()]
     Param(
         [Parameter(Mandatory, ValueFromPipeline)]

@@ -1,4 +1,28 @@
 function Measure-Group {
+    <#
+    .SYNOPSIS
+    {{Fill in the Synopsis}}
+    .NOTES
+    Github      : https://github.com/tostka/PowerShell-Statistics
+    Tags        : Powershell,Statistics
+    REVISIONS
+    .DESCRIPTION
+    {{Fill in the Description}}
+    .PARAMETER  InputObject
+    Input objects containing the relevant data
+    .PARAMETER  Property
+    Property of the input objects containing the relevant data
+    .PARAMETER Width
+    Length of the bar for the maximum value (width of the graph)
+    .INPUTS
+    Microsoft.PowerShell.Commands.GroupInfo[]
+    .OUTPUTS
+    System.Object
+    .EXAMPLE
+    PS> {{ Add example code here }}
+    .LINK
+    https://github.com/tostka/PowerShell-Statistics
+    #>
     [CmdletBinding()]
     param(
         [Parameter(Mandatory,ValueFromPipeline)]
