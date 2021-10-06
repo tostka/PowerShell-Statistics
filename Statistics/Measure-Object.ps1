@@ -6,9 +6,14 @@
     Github      : https://github.com/tostka/PowerShell-Statistics
     Tags        : Powershell,Statistics
     REVISIONS
+    * 1:59 PM 10/6/2021 added CBH description of breaking behavior of Measure-Object cmdlet, while in use (e.g. you don't want this loaded full time if you use Measure).
+    * 4:03 PM 7/20/2021 all mod cmdlets: converted external .md-based docs into CBH (wasn't displaying get-help for cmds when published & installed)
     .DESCRIPTION
     This cmdlet overloads the official implementation and adds several statistical value to the resulting object.
     This includes the median, several percentiles as well as the 95% confidence interval.
+
+    Note:As an overload for the native Measure-Object, with -Property as a *mandated* parameter, this can break other uses of measure-object while loaded (will cause other scripts/functions to prompt: Supply values for the following parameters: Property:). 
+    Workaround is to use remove-module -name Statistics, to ensure the native Measure-object is available. 
 
     The Measure-Object cmdlet calculates the property values of certain types of object.
     Measure-Object performs three types of measurements, depending on the parameters in the command.

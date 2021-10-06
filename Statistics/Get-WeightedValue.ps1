@@ -6,6 +6,7 @@ function Get-WeightedValue {
     Github      : https://github.com/tostka/PowerShell-Statistics
     Tags        : Powershell,Statistics
     REVISIONS
+    * 4:03 PM 7/20/2021 all mod cmdlets: converted external .md-based docs into CBH (wasn't displaying get-help for cmds when published & installed)
     .DESCRIPTION
     {{Fill in the Description}}
     .PARAMETER  InputObject
