@@ -1,4 +1,4 @@
-function ConvertFrom-PrimitiveType {
+﻿function ConvertFrom-PrimitiveType {
     <#
     .SYNOPSIS
     Wraps values in objects

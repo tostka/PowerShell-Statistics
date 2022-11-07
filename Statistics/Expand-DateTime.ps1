@@ -1,4 +1,4 @@
-function Expand-DateTime {
+﻿function Expand-DateTime {
     <#
     .SYNOPSIS
     convert timestamps for legibility

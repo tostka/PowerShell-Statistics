@@ -1,4 +1,4 @@
-function Measure-Group {
+﻿function Measure-Group {
     <#
     .SYNOPSIS
     {{Fill in the Synopsis}}

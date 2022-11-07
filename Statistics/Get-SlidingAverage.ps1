@@ -1,4 +1,4 @@
-function Get-SlidingAverage {
+﻿function Get-SlidingAverage {
     <#
     .SYNOPSIS
     Calculates a sliding average over a window of the specified size

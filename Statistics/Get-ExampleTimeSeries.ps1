@@ -1,4 +1,4 @@
-function Get-ExampleTimeSeries {
+﻿function Get-ExampleTimeSeries {
     [CmdletBinding()]
     param(
         [Parameter()]

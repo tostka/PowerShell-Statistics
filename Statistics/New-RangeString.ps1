@@ -1,4 +1,4 @@
-function New-RangeString {
+﻿function New-RangeString {
     [Diagnostics.CodeAnalysis.SuppressMessageAttribute(
         "PSUseShouldProcessForStateChangingFunctions", 
         "", 

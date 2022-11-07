@@ -1,4 +1,4 @@
-Get-ChildItem -Path $env:BHProjectPath\docs -Directory | Select-Object -ExpandProperty Name | ForEach-Object {
+﻿Get-ChildItem -Path $env:BHProjectPath\docs -Directory | Select-Object -ExpandProperty Name | ForEach-Object {
     "Compiling help for $_"
 
     Describe "Documentation for $_" {

@@ -1,4 +1,4 @@
-function Get-WeightedValue {
+﻿function Get-WeightedValue {
     <#
     .SYNOPSIS
     {{Fill in the Synopsis}}

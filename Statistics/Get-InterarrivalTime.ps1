@@ -1,4 +1,4 @@
-function Get-InterarrivalTime {
+﻿function Get-InterarrivalTime {
     <#
     .SYNOPSIS
     Calculates time span between each arrival and the next.
