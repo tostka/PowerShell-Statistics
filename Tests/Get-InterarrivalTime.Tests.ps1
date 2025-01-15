@@ -2,11 +2,13 @@
 #    . "$($_.FullName)"
 #}
 
-if ($env:PSModulePath -notlike '*Statistics*') {
-    $env:PSModulePath = "$((Get-Item -Path "$PSScriptRoot\..").FullName);$env:PSModulePath"
-}
+BeforeAll {
+    if ($env:PSModulePath -notlike '*Statistics*') {
+        $env:PSModulePath = "$((Get-Item -Path "$PSScriptRoot\..").FullName);$env:PSModulePath"
+    }
 
-Import-Module -Name Statistics -Force -ErrorAction 'Stop'
+    Import-Module -Name Statistics -Force -ErrorAction 'Stop'
+}
 
 Describe 'Get-InterarrivalTime' {
     $now = Get-Date
@@ -18,6 +20,6 @@ Describe 'Get-InterarrivalTime' {
     } | Sort-Object -Property Timestamp
     It 'Produces the correct members' {
         $data = $data | Get-InterarrivalTime -Property Timestamp
-        { $data | Select-Object -ExpandProperty InterarrivalTicks -ErrorAction SilentlyContinue } | Should Not Throw
+        { $data | Select-Object -ExpandProperty InterarrivalTicks -ErrorAction SilentlyContinue } | Should -Not -Throw
     }
 }

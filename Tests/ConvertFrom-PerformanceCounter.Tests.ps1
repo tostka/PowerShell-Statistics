@@ -2,11 +2,13 @@
 #    . "$($_.FullName)"
 #}
 
-if ($env:PSModulePath -notlike '*Statistics*') {
-    $env:PSModulePath = "$((Get-Item -Path "$PSScriptRoot\..").FullName);$env:PSModulePath"
-}
+BeforeAll {
+    if ($env:PSModulePath -notlike '*Statistics*') {
+        $env:PSModulePath = "$((Get-Item -Path "$PSScriptRoot\..").FullName);$env:PSModulePath"
+    }
 
-Import-Module -Name Statistics -Force -ErrorAction 'Stop'
+    Import-Module -Name Statistics -Force -ErrorAction 'Stop'
+}
 
 Describe 'ConvertFrom-PerformanceCounter' {
     It 'Produces the correct properties' {
@@ -19,7 +21,7 @@ Describe 'ConvertFrom-PerformanceCounter' {
             }
         }
         $data = Get-Counter -Counter $Counter | ConvertFrom-PerformanceCounter -Instance _total
-        { $data | Select-Object -ExpandProperty Timestamp -ErrorAction SilentlyContinue } | Should Not Throw
-        { $data | Select-Object -ExpandProperty Value     -ErrorAction SilentlyContinue } | Should Not Throw
+        { $data | Select-Object -ExpandProperty Timestamp -ErrorAction SilentlyContinue } | Should -Not -Throw
+        { $data | Select-Object -ExpandProperty Value     -ErrorAction SilentlyContinue } | Should -Not -Throw
     }
 }

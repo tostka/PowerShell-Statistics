@@ -2,11 +2,13 @@
 #    . "$($_.FullName)"
 #}
 
-if ($env:PSModulePath -notlike '*Statistics*') {
-    $env:PSModulePath = "$((Get-Item -Path "$PSScriptRoot\..").FullName);$env:PSModulePath"
-}
+BeforeAll {
+    if ($env:PSModulePath -notlike '*Statistics*') {
+        $env:PSModulePath = "$((Get-Item -Path "$PSScriptRoot\..").FullName);$env:PSModulePath"
+    }
 
-Import-Module -Name Statistics -Force -ErrorAction 'Stop'
+    Import-Module -Name Statistics -Force -ErrorAction 'Stop'
+}
 
 Describe 'Get-ExampleTimeSeries' {
     $end = (Get-Date)
@@ -14,23 +16,23 @@ Describe 'Get-ExampleTimeSeries' {
     $count = 25
     $data = Get-ExampleTimeSeries -Start $start -End $end -Count $count
     It 'Produces data of correct length' {
-        $data -is [array] | Should Be $true
-        $data.Length | Should Be $count
+        $data -is [array] | Should -Be $true
+        $data.Length | Should -Be $count
     }
     It 'Honours the defined time range' {
         $stats = $data | Microsoft.PowerShell.Utility\Measure-Object -Property Timestamp -Minimum -Maximum
-        $stats.Minimum | Should BeGreaterThan $start
-        $stats.Maximum | Should BeLessThan $end
+        $stats.Minimum | Should -BeGreaterThan $start
+        $stats.Maximum | Should -BeLessThan $end
     }
     It 'Produces the correct range of values' {
         $stats = $data | Microsoft.PowerShell.Utility\Measure-Object -Property Value -Minimum -Maximum
-        $stats.Minimum -ge 0 | Should Be $true
-        $stats.Maximum | Should BeLessThan 100
+        $stats.Minimum -ge 0 | Should -Be $true
+        $stats.Maximum | Should -BeLessThan 100
     }
     It 'Calculated the time range correctly' {
         $data = Get-ExampleTimeSeries -Interval 3 -Count $count
         $stats = $data | Microsoft.PowerShell.Utility\Measure-Object -Property Timestamp -Minimum -Maximum
-        $stats.Minimum | Should BeGreaterThan $start
-        $stats.Maximum | Should BeLessThan $end
+        $stats.Minimum | Should -BeGreaterThan $start
+        $stats.Maximum | Should -BeLessThan $end
     }
 }

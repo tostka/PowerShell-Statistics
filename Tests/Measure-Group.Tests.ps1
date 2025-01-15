@@ -2,11 +2,13 @@
 #    . "$($_.FullName)"
 #}
 
-if ($env:PSModulePath -notlike '*Statistics*') {
-    $env:PSModulePath = "$((Get-Item -Path "$PSScriptRoot\..").FullName);$env:PSModulePath"
-}
+BeforeAll {
+    if ($env:PSModulePath -notlike '*Statistics*') {
+        $env:PSModulePath = "$((Get-Item -Path "$PSScriptRoot\..").FullName);$env:PSModulePath"
+    }
 
-Import-Module -Name Statistics -Force -ErrorAction 'Stop'
+    Import-Module -Name Statistics -Force -ErrorAction 'Stop'
+}
 
 Describe 'Measure-Group' {
     It 'Produces correct members' {
@@ -19,6 +21,6 @@ Describe 'Measure-Group' {
         } | Sort-Object -Property Timestamp
         $data = $data | Expand-DateTime | Group-Object -Property Hour
         $group = Measure-Group -InputObject $data -Property Value
-        { $group | Select-Object -ExpandProperty Average -ErrorAction SilentlyContinue } | Should Not Throw
+        { $group | Select-Object -ExpandProperty Average -ErrorAction SilentlyContinue } | Should -Not -Throw
     }
 }

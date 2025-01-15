@@ -2,11 +2,13 @@
 #    . "$($_.FullName)"
 #}
 
-if ($env:PSModulePath -notlike '*Statistics*') {
-    $env:PSModulePath = "$((Get-Item -Path "$PSScriptRoot\..").FullName);$env:PSModulePath"
-}
+BeforeAll {
+    if ($env:PSModulePath -notlike '*Statistics*') {
+        $env:PSModulePath = "$((Get-Item -Path "$PSScriptRoot\..").FullName);$env:PSModulePath"
+    }
 
-Import-Module -Name Statistics -Force -ErrorAction 'Stop'
+    Import-Module -Name Statistics -Force -ErrorAction 'Stop'
+}
 
 Describe 'Show-Measurement' {
     $data = 0..10 | ConvertFrom-PrimitiveType
@@ -20,6 +22,6 @@ Describe 'Show-Measurement' {
     It 'Produces input object' {
         Mock Write-Host {}
         $input = Show-Measurement -Data $stats -PassThru
-        $input | Should Be $stats
+        $input | Should -Be $stats
     }
 }
